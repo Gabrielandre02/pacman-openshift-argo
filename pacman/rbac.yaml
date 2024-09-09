@@ -1,0 +1,103 @@
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  name: privileged-pacman
+priority: null
+users:
+- system:serviceaccount:pacman:pacman-service-account
+allowPrivilegedContainer: true
+allowPrivilegeEscalation: true
+defaultAddCapabilities: []
+requiredDropCapabilities: []
+allowedCapabilities:
+- "*"
+allowedFlexVolumes:
+- driver: "*"
+allowHostNetwork: true
+allowHostPorts: true
+allowHostPID: true
+allowHostIPC: true
+readOnlyRootFilesystem: false
+runAsUser:
+  type: RunAsAny
+  uid: null
+  uidRangeMin: null
+  uidRangeMax: null
+seLinuxContext:
+  type: RunAsAny
+  user: null
+  role: null
+  level: null
+fsGroup:
+  type: RunAsAny
+  ranges: null
+supplementalGroups:
+  type: RunAsAny
+  ranges: null
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pacman-service-account
+
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: pacman-clusterrole
+rules:
+- apiGroups:
+  - policy
+  resources:
+  - podsecuritypolicies
+  verbs:
+  - use
+  resourceNames:
+  - pacman
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - nodes
+  verbs:
+  - get
+  - watch
+  - list
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pacman-clusterrole
+  namespace: pacman
+roleRef:
+  kind: ClusterRole
+  name: admin
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts
+- kind: ServiceAccount
+  name: pacman-service-account
+  namespace: pacman
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: pacman-clusterrole
+  namespace: pacman
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: pacman-clusterrole
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: system:serviceaccounts
+- kind: ServiceAccount
+  name: default
+  namespace: pacman
+
+---
