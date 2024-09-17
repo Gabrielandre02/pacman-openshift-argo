@@ -9,6 +9,10 @@ spec:
   to:
     kind: Service
     name: pacman
-  host: pacman.apps.ocp4gcp.4mfn.p2.openshiftapps.com
+  host: pacman-pacman.apps.ocp4gcp.4mfn.p2.openshiftapps.com
   port:
     targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
