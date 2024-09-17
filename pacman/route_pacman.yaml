@@ -9,6 +9,6 @@ spec:
   to:
     kind: Service
     name: pacman
-  host: pacman.apps.openshift.compwire.com.br
+  host: pacman.apps.ocp4gcp.4mfn.p2.openshiftapps.com
   port:
     targetPort: 8080
