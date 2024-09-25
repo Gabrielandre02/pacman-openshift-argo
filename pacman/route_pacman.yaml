@@ -10,6 +10,7 @@ spec:
     kind: Service
     name: pacman
   host: pacman-pacman.apps.openshift.compwire.com.br
+  port:
     targetPort: 8080
   tls:
     termination: edge
