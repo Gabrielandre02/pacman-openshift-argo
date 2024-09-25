@@ -33,7 +33,7 @@ spec:
             port: 8080
         env:
         - name: MONGO_SERVICE_HOST
-          value: mongo
+          value: mongo.headless.default.svc.cluster.local
         - name: MONGO_AUTH_USER
           valueFrom:
             secretKeyRef:
