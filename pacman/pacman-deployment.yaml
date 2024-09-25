@@ -33,7 +33,7 @@ spec:
             port: 8080
         env:
         - name: MONGO_SERVICE_HOST
-          value: 192.168.104.11
+          value: 192.168.105.18
         - name: MONGO_AUTH_USER
           valueFrom:
             secretKeyRef:
