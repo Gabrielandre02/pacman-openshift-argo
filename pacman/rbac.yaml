@@ -30,7 +30,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: pacman-clusterrole
-  namespace: pacman
+  namespace: default
 roleRef:
   kind: ClusterRole
   name: admin
@@ -41,13 +41,13 @@ subjects:
   name: system:serviceaccounts
 - kind: ServiceAccount
   name: pacman-service-account
-  namespace: pacman
+  namespace: default
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: pacman-clusterrole
-  namespace: pacman
+  namespace: default
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -58,4 +58,4 @@ subjects:
   name: system:serviceaccounts
 - kind: ServiceAccount
   name: default
-  namespace: pacman
+  namespace: default
